@@ -1,25 +1,32 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "my final project",
+  "license": "ISC",
+  "author": "abdu",
+  "type": "module",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js",
+    "build": "echo \"no build needed\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mekin-jema/backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Mekin-jema/backend/issues"
-  },
-  "homepage": "https://github.com/Mekin-jema/backend#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
+    "better-auth": "^1.2.7",
+    "cloudinary": "^2.6.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mailtrap": "^4.1.0",
+    "mongoose": "^8.13.2",
+    "mqtt": "^5.12.0",
+    "nodemon": "^3.1.10",
+    "socket.io": "^4.8.1"
   }
 }

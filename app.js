@@ -1,9 +1,8 @@
 import express from "express";
 import mqtt from "mqtt";
-import db from "../configure/db.confige.js";
-import router from "../routes/index.js";
+import db from "./src/configure/db.confige.js";
+import router from "./src/routes/index.js";
 import cors from "cors";
-import { Server } from "socket.io";
 import { createServer } from "http";
 import dotenv from "dotenv";
 
@@ -13,30 +12,10 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
-const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    credentials: true,
-    origin: "http://localhost:5173", // Frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  },
-});
-
-app.set("io", io);
+// const httpServer = createServer(app);
 
 // Store live sensor data
 const sensorData = [];
-
-// WebSocket connection
-io.on("connection", (socket) => {
-  console.log("Client connected");
-
-  socket.emit("message", "Welcome to the WebSocket server!");
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
 
 // MQTT Configuration
 const MQTT_BROKER_URL =
@@ -78,7 +57,6 @@ mqttClient.on("message", async (topic, message) => {
       timestamp, // Using the custom formatted timestamp
     };
     mockData.push(timestampedData);
-    io.emit("sensorData", mockData);
 
     // console.log("Received sensor data:", mockData);
   } catch (error) {
@@ -86,7 +64,6 @@ mqttClient.on("message", async (topic, message) => {
   }
 });
 
-// Optional: Emit mock data every 5 seconds (useful for testing frontend without MQTT)
 // Basic route
 app.get("/", (req, res) => {
   res.send("Hello from the server");
@@ -116,7 +93,7 @@ process.on("SIGINT", () => {
 (async () => {
   try {
     await db();
-    httpServer.listen(port, () =>
+    app.listen(port, () =>
       console.log(`Server running on http://localhost:${port}`)
     );
   } catch (error) {
